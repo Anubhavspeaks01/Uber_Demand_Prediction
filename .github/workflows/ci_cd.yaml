@@ -15,11 +15,12 @@ jobs:
           python-version: '3.12.7'
           cache: 'pip' 
 
+      # 🔥 ONLY CHANGE HERE
       - name: Install Packages
+        working-directory: ${{ github.workspace }}
         run: |
           python -m pip install --upgrade pip
-          pip install -r ./requirements-dev.txt
-
+          pip install -r requirements-dev.txt
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -55,7 +56,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1
+          aws-region: eu-north-1
        
       - name: Login to Amazon ECR
         id: login-ecr
@@ -94,4 +95,4 @@ jobs:
             --deployment-group-name uber-demand-prediction-deployment-group \
             --s3-location bucket=demandpredictiondeployment,key=deployment.zip,bundleType=zip \
             --file-exists-behavior OVERWRITE \
-            --region ap-south-1
+            --region eu-north-1
