@@ -15,12 +15,12 @@ jobs:
           python-version: '3.12.7'
           cache: 'pip' 
 
-      # 🔥 ONLY CHANGE HERE
       - name: Install Packages
-        working-directory: ${{ github.workspace }}
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements-dev.txt
+  run: |
+    pwd
+    ls -R
+    python -m pip install --upgrade pip
+    pip install -r $GITHUB_WORKSPACE/requirements-dev.txt
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
