@@ -18,7 +18,7 @@ jobs:
       - name: Install Packages
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements-dev.txt
+          pip install -r ./requirements-dev.txt
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
