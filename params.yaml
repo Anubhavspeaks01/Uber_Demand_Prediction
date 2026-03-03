@@ -1,0 +1,7 @@
+extract_features:
+  mini_batch_kmeans:
+    n_clusters: 30
+    n_init: 10
+    random_state: 42
+  ewma:
+    alpha: 0.4

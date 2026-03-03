@@ -1,0 +1,54 @@
+stages:
+  data_ingestion:
+    cmd: python ./src/data/data_ingestion.py
+    deps:
+      - ./src/data/data_ingestion.py
+
+  extract_features:
+    cmd: python ./src/features/extract_features.py
+    deps: 
+      - ./src/features/extract_features.py
+    params: 
+      - extract_features.mini_batch_kmeans.n_clusters
+      - extract_features.mini_batch_kmeans.n_init
+      - extract_features.mini_batch_kmeans.random_state
+      - extract_features.ewma.alpha
+    outs:
+      - ./data/processed/resampled_data.csv
+      - ./models/scaler.joblib
+      - ./models/mb_kmeans.joblib
+
+  feature_processing:
+    cmd: python ./src/features/feature_processing.py
+    deps:
+      - ./src/features/feature_processing.py
+      - ./data/processed/resampled_data.csv
+    outs:
+      - ./data/processed/train.csv
+      - ./data/processed/test.csv
+
+  train:
+    cmd: python ./src/models/train.py
+    deps:
+      - ./src/models/train.py
+      - ./data/processed/train.csv
+    outs:
+      - ./models/encoder.joblib
+      - ./models/model.joblib
+
+  evaluate:
+    cmd: python ./src/models/evaluate.py
+    deps:
+      - ./src/models/evaluate.py
+      - ./models/encoder.joblib
+      - ./models/model.joblib
+      - ./data/processed/test.csv
+      - ./data/processed/train.csv
+    outs:
+      - ./run_information.json
+
+  register_model:
+    cmd: python ./src/models/register_model.py
+    deps:
+      - ./src/models/register_model.py
+      - ./run_information.json
