@@ -50,7 +50,7 @@ df = pd.read_csv(data_path, parse_dates=["tpep_pickup_datetime"]).set_index("tpe
 
 # UI of app
 # make the title for the page
-st.title("Uber Demand in New York City 🚕🌆")
+st.title("Uber Demand in New York City ")
 
 # select for only neighbors or all
 st.sidebar.title("Options")

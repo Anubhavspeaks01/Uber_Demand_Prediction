@@ -76,8 +76,8 @@ target/
 .ipynb_checkpoints/
 
 # exclude data from source control by default
-/data/
-
+data/*
+!data/**/*.dvc
 # Mac OS-specific storage files
 .DS_Store
 
@@ -87,3 +87,4 @@ target/
 
 # Mypy cache
 .mypy_cache/
+/run_information.json
