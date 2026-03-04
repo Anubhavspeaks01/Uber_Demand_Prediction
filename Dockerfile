@@ -2,29 +2,26 @@
 FROM python:3.12.7
 
 # set the working directory
-WORKDIR /app
+WORKDIR /app/
 
-# copy requirements first (better caching)
+# copy the requirements file to workdir
 COPY requirements-docker.txt .
 
-# install dependencies
-RUN pip install --no-cache-dir -r requirements-docker.txt
+# install the requirements
+RUN pip install -r requirements-docker.txt
 
-# install dvc (with http support for DagsHub)
-RUN pip install --no-cache-dir dvc[http]
+# copy the data files
+COPY ./data/external/plot_data.csv ./data/external/plot_data.csv 
+COPY ./data/processed/test.csv ./data/processed/test.csv
 
-# copy entire project (including .dvc files)
-COPY . .
+# copy the models
+COPY ./models/ ./models/ 
 
-# receive token from docker build
-ARG DAGSHUB_USER_TOKEN
-ENV DAGSHUB_USER_TOKEN=$DAGSHUB_USER_TOKEN
+# copy the code files
+COPY ./app.py ./app.py
 
-# pull data from DVC remote
-RUN dvc pull
-
-# expose the port
+# expose the port on the container
 EXPOSE 8000
 
 # run the streamlit app
-CMD ["streamlit", "run", "app.py", "--server.port", "8000", "--server.address", "0.0.0.0"]
+CMD [ "streamlit", "run", "app.py", "--server.port", "8000", "--server.address", "0.0.0.0"]
