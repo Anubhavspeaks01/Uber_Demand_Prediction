@@ -84,12 +84,11 @@ jobs:
       # -------------------------
       - name: Build, tag, and push docker image to Amazon ECR
         env:
-          AWS_REGION: eu-north-1
-          ECR_REGISTRY: 696637901268.dkr.ecr.eu-north-1.amazonaws.com
-          IMAGE_NAME: uber-demand-prediction
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: latest
         run: |
-          docker build -t 696637901268.dkr.ecr.eu-north-1.amazonaws.com/uber-demand-prediction:latest .
-          docker push 696637901268.dkr.ecr.eu-north-1.amazonaws.com/uber-demand-prediction:latest
+          docker build -t $REGISTRY/uber-demand-prediction:$IMAGE_TAG .
+          docker push $REGISTRY/uber-demand-prediction:$IMAGE_TAG
       # -------------------------
       # Zip Deployment Files
       # -------------------------
