@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
     # -------------------------
     # Checkout Code
     # -------------------------
@@ -34,7 +35,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements-dev.txt
-        pip install dvc
+        pip install "dvc[http]"
 
     # -------------------------
     # Configure AWS Credentials
@@ -47,11 +48,23 @@ jobs:
         aws-region: eu-north-1
 
     # -------------------------
-    # Pull Data from DVC
+    # Pull Data from DVC (DagsHub)
     # -------------------------
-    - name: DVC Pull
+    - name: Pull Data from DVC
+      env:
+        DAGSHUB_USER_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
       run: |
+        dvc remote modify origin auth basic
+        dvc remote modify origin user token
+        dvc remote modify origin password $DAGSHUB_USER_TOKEN
         dvc pull
+
+    # -------------------------
+    # Verify Data Exists
+    # -------------------------
+    - name: Verify Data
+      run: |
+        ls -R data
 
     # -------------------------
     # Run Tests
