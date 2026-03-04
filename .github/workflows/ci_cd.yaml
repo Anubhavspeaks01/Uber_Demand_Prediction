@@ -94,4 +94,5 @@ jobs:
             --deployment-group-name uber-demand-prediction-deployment-group \
             --s3-location bucket=demandpredictiondeployment,key=deployment.zip,bundleType=zip \
             --file-exists-behavior OVERWRITE \
-            --region ap-south-1
+            --region eu-north-1
+       
