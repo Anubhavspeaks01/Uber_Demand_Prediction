@@ -48,15 +48,12 @@ jobs:
         aws-region: eu-north-1
 
     # -------------------------
-    # Pull Data from DVC (DagsHub)
+    # Pull Data from DVC
     # -------------------------
     - name: Pull Data from DVC
       env:
         DAGSHUB_USER_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
       run: |
-        dvc remote modify origin auth basic
-        dvc remote modify origin user token
-        dvc remote modify origin password $DAGSHUB_USER_TOKEN
         dvc pull
 
     # -------------------------
