@@ -88,8 +88,16 @@ jobs:
           REPOSITORY: ${{ secrets.AWS_REPOSITORY_NAME }}
           IMAGE_TAG: latest
         run: |
+          export REGISTRY=$REGISTRY
+          export REPOSITORY=$REPOSITORY
+          export IMAGE_TAG=$IMAGE_TAG
+
+          echo "Registry: $REGISTRY"
+          echo "Repository: $REPOSITORY"
+
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
       # -------------------------
       # Zip Deployment Files
       # -------------------------
