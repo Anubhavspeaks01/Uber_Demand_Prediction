@@ -16,6 +16,10 @@ RUN pip install --no-cache-dir dvc[http]
 # copy entire project (including .dvc files)
 COPY . .
 
+# receive token from docker build
+ARG DAGSHUB_USER_TOKEN
+ENV DAGSHUB_USER_TOKEN=$DAGSHUB_USER_TOKEN
+
 # pull data from DVC remote
 RUN dvc pull
 
