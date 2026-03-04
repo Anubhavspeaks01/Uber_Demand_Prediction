@@ -80,7 +80,7 @@ jobs:
       - name: Upload ZIP to S3
         if: success()
         run: |
-            aws s3 cp deployment.zip s3://demandpredictiondeployment/deployment.zip
+            aws s3 cp deployment.zip s3://demandpredictiondeploymentbucket/deployment.zip
 
       # Deploy to AWS CodeDeploy using the uploaded ZIP file
       - name: Deploy to AWS CodeDeploy
@@ -92,7 +92,7 @@ jobs:
             --application-name uber-demand-prediction \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --deployment-group-name uber-demand-prediction-deployment-group \
-            --s3-location bucket=demandpredictiondeployment,key=deployment.zip,bundleType=zip \
+            --s3-location bucket=demandpredictiondeploymentbucket,key=deployment.zip,bundleType=zip \
             --file-exists-behavior OVERWRITE \
             --region eu-north-1
        
