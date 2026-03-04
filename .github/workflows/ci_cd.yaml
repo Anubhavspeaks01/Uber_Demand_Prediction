@@ -88,9 +88,8 @@ jobs:
           REPOSITORY: uber-demand-prediction
           IMAGE_TAG: latest
         run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-
+          docker build -t 696637901268.dkr.ecr.eu-north-1.amazonaws.com/uber-demand-prediction:latest .
+          docker push 696637901268.dkr.ecr.eu-north-1.amazonaws.com/uber-demand-prediction:latest
       # -------------------------
       # Zip Deployment Files
       # -------------------------
